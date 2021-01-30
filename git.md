@@ -6,6 +6,10 @@
 # After First Time
 * git add . => add all files to tracked files/ staging area
 * git commit -m "initial commit" => checkpoint created 
-* git remote add origin https://github.com/sushberiwal/Dev_1_Feb.git
+* git remote add origin "github repository path"
+* git push -u origin master
 
 # When pushing to same repository
+* git add .
+* git commit -m "message"
+* git push -u origin master
