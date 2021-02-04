@@ -19,17 +19,17 @@ function checkFolder(ext){
     if(ext == "doc" || ext == "pdf" || ext == "txt"){
         // check Documents Folder
         //"./Downloads/Documents"
-        let folderPath = downloadsPath+"/Documents"
+        let folderPath = downloadsPath+"/Documents";
         return fs.existsSync(folderPath);
     }
     else if(ext == "jpeg" || ext == "jpg" || ext == "png"){
         // check Images
-        let folderPath = downloadsPath+"/Images"
+        let folderPath = downloadsPath+"/Images";
         return fs.existsSync(folderPath);
     }
     else if(ext == "mkv" || ext == "mp4"){
         // check Videos
-        let folderPath = downloadsPath+"/Videos"
+        let folderPath = downloadsPath+"/Videos";
         return fs.existsSync(folderPath);
     }
 }
