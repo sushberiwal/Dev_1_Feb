@@ -28,7 +28,6 @@ function processHtml(html){
     let ch = cheerio.load(html);
     let allATags = ch('a[data-hover="Scorecard"]');
     // console.log(allATags);
-
     // 60 links
     for(let i=0 ; i<allATags.length ; i++){
         let link = allATags[i].attribs.href;

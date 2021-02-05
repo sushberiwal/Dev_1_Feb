@@ -21,10 +21,10 @@ function processHtml(html) {
   // <div class="Collapsible"> </div> , <div class-"Collapsible"> </div>
   for (let i = 0; i < bothInningsDiv.length; i++) {
     // MI
-    let teamName = ch(bothInningsDiv[i]).find("h5").text();
-    // MUMBAI INDIANS INNINGS AKSIHFKASHFKU => [ "MUMBAI INDIANS " , " AKSIHFKASHFKU"  ];
-    teamName = teamName.split("INNINGS")[0].trim();
-    console.log(teamName);
+    // MUMBAI INDIANS INNINGS AKSIHFKASHFKU => [  "MUMBAI INDIANS " , " AKSIHFKASHFKU"  ];
+    let teamName = ch(bothInningsDiv[i]).find("h5").text().split("INNINGS")[0].trim();
+    let opponentTeam = ch(bothInningsDiv[ i == 0 ? 1 : 0]).find("h5").text().split("INNINGS")[0].trim();
+    
     let allTrs = ch(bothInningsDiv[i]).find(".table.batsman tbody tr");
     // { <tr>  <td></td> , <td></td> , <td></td> ,<td></td> </tr> , <tr> <td></td> </tr> ,<tr> </tr> ,<tr> </tr> , <tr> </tr> ,<tr class="extras"> </tr>  }
     for (let j = 0; j < allTrs.length - 1; j++) {
@@ -39,11 +39,75 @@ function processHtml(html) {
             let fours = ch(allTds[5]).text().trim();
             let sixes = ch(allTds[6]).text().trim();
             let strikeRate = ch(allTds[7]).text().trim();
-            console.log(`Batsman = ${batsmanName} Runs = ${runs} Balls = ${balls} Fours = ${fours} Sixes = ${sixes} SR = ${strikeRate}`);
+            processDetails(teamName , opponentTeam , batsmanName , runs , balls , fours , sixes , strikeRate);
+          }
         }
+        console.log("##########################################################");
+      }
     }
-    console.log("##########################################################");
+
+
+    function checkTeamFolder(teamPath){
+      return fs.existsSync(teamPath);
+    }
+
+    function checkBatsmanFile(batsmanPath){
+      return fs.existsSync(batsmanPath);
+    }
+    function updateBatsmanFile(batsmanPath , opponentTeam , runs , balls , fours , sixes , strikeRate){
+      let batsmanFile = fs.readFileSync(batsmanPath);
+      // stringified form me data aayega
+      batsmanFile = JSON.parse(batsmanFile);
+      let inning = {
+        Opponent : opponentTeam ,
+        Runs : runs ,
+        Balls : balls ,
+        Fours : fours , 
+        Sixes : sixes , 
+        SR : strikeRate
+      }
+      batsmanFile.push(inning);
+      fs.writeFileSync(batsmanPath , JSON.stringify(batsmanFile));
+    }
+    function createBatsmanFile(batsmanPath , opponentTeam , runs , balls , fours , sixes , strikeRate){
+      // "./IPL/Mumbai Indians/askj.json"
+      let batsmanFile = [];
+      let inning = {
+        Opponent : opponentTeam ,
+        Runs : runs ,
+        Balls : balls ,
+        Fours : fours , 
+        Sixes : sixes , 
+        SR : strikeRate
+      }
+      batsmanFile.push(inning);
+      fs.writeFileSync(batsmanPath , JSON.stringify(batsmanFile));
+    }
+    function createTeamFolder(teamPath){
+      fs.mkdirSync(teamPath);
+    }
+
+    
+    
+function processDetails(teamName , opponentTeam , batsmanName , runs , balls , fours , sixes , strikeRate){
+  let teamPath = `./IPL/${teamName}`;
+  let batsmanPath = `./IPL/${teamName}/${batsmanName}.json`; 
+  let isTeamFolder = checkTeamFolder(teamPath);
+  if(isTeamFolder){
+    let isBatsman = checkBatsmanFile(batsmanPath);
+    if(isBatsman){
+      updateBatsmanFile(batsmanPath , opponentTeam , runs , balls , fours , sixes , strikeRate );
+    }
+    else{
+      createBatsmanFile(batsmanPath , opponentTeam , runs , balls , fours , sixes , strikeRate);
+    }
+  }
+  else{
+    createTeamFolder(teamPath);
+    createBatsmanFile(batsmanPath , opponentTeam , runs , balls , fours , sixes , strikeRate);
   }
 }
+
+
 
 module.exports = getMatch;
