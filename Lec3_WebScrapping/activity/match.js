@@ -1,3 +1,5 @@
+// convert json data into excel sheet
+
 const request = require("request");
 const fs = require("fs");
 const cheerio = require("cheerio");
@@ -54,6 +56,7 @@ function processHtml(html) {
     function checkBatsmanFile(batsmanPath){
       return fs.existsSync(batsmanPath);
     }
+
     function updateBatsmanFile(batsmanPath , opponentTeam , runs , balls , fours , sixes , strikeRate){
       let batsmanFile = fs.readFileSync(batsmanPath);
       // stringified form me data aayega
@@ -69,6 +72,7 @@ function processHtml(html) {
       batsmanFile.push(inning);
       fs.writeFileSync(batsmanPath , JSON.stringify(batsmanFile));
     }
+
     function createBatsmanFile(batsmanPath , opponentTeam , runs , balls , fours , sixes , strikeRate){
       // "./IPL/Mumbai Indians/askj.json"
       let batsmanFile = [];

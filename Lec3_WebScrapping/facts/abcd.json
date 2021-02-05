@@ -1,0 +1,66 @@
+[
+  {
+    "Opponent": "Royal Challengers Bangalore",
+    "Runs": "60",
+    "Balls": "46",
+    "Fours": "5",
+    "Sixes": "1",
+    "SR": "130.43"
+  },
+  {
+    "Opponent": "Mumbai Indians",
+    "Runs": "2",
+    "Balls": "4",
+    "Fours": "0",
+    "Sixes": "0",
+    "SR": "50.00"
+  },
+  {
+    "Opponent": "Chennai Super Kings",
+    "Runs": "8",
+    "Balls": "10",
+    "Fours": "1",
+    "Sixes": "0",
+    "SR": "80.00"
+  },
+  {
+    "Opponent": "Kolkata Knight Riders",
+    "Runs": "0",
+    "Balls": "1",
+    "Fours": "0",
+    "Sixes": "0",
+    "SR": "0.00"
+  },
+  {
+    "Opponent": "Mumbai Indians",
+    "Runs": "15",
+    "Balls": "15",
+    "Fours": "3",
+    "Sixes": "0",
+    "SR": "100.00"
+  },
+  {
+    "Opponent": "Sunrisers Hyderabad",
+    "Runs": "26",
+    "Balls": "19",
+    "Fours": "3",
+    "Sixes": "1",
+    "SR": "136.84"
+  },
+  {
+    "Opponent": "Rajasthan Royals",
+    "Runs": "2",
+    "Balls": "9",
+    "Fours": "0",
+    "Sixes": "0",
+    "SR": "22.22"
+  },
+  {
+    "Opponent": "Mumbai Indians",
+    "Runs": "0",
+    "Balls": "3",
+    "Fours": "0",
+    "Sixes": "0",
+    "SR": "0.00"
+  }
+]
