@@ -9,9 +9,8 @@ const fs = require("fs");
 // 
 // })
 
-
 //B                     //A
-let pendingPromise = fs.promises.readFile("./f1.txt");
+let pendingPromise = fs.promises.readFile("./f11.txt");
 console.log(pendingPromise);
 
 
@@ -20,9 +19,8 @@ console.log(pendingPromise);
 
 pendingPromise.then( function(data){
     console.log("Inside then !!");
-    console.log(pendingPromise); 
+    // console.log(pendingPromise); 
     console.log(data+"");
-
 });
 
 
@@ -31,7 +29,10 @@ pendingPromise.then( function(data){
 
 pendingPromise.catch( function(error){
     console.log("Inside catch");
-    console.log(pendingPromise);
+    // console.log(pendingPromise);
+    console.log(error);
 });
+
+
 
 
