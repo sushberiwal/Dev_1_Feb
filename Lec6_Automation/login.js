@@ -38,22 +38,12 @@ browserOpenPromise
       return loginPromise;
   })
   .then(function(){
-      // wait for this selector until it is visible on dom
-      let waitPromise = tab.waitForSelector('#base-card-1-link' , {visible:true} );
-      return waitPromise;
-    //Promise<Pending>
+    let waitAndClickPromise = waitAndClick('#base-card-1-link');
+    return waitAndClickPromise;
   })
   .then(function(){
-      let ipKitClickedPromise = tab.click('#base-card-1-link');
-      return ipKitClickedPromise;
-  })
-  .then(function(){
-    let waitPromise = tab.waitForSelector('a[data-attr1="warmup"]' , {visible:true});
-    return waitPromise;
-  })
-  .then(function(){
-      let warmupClicked = tab.click('a[data-attr1="warmup"]');
-      return warmupClicked;
+    let waitAndClickPromise = waitAndClick('a[data-attr1="warmup"]');
+    return waitAndClickPromise;
   })
   .then(function(){
       let waitPromise = tab.waitForSelector('.js-track-click.challenge-list-item' , {visible:true} );
@@ -65,7 +55,7 @@ browserOpenPromise
       // Promise<pending>
   })
   .then(function(allATags){
-      console.log(allATags);
+      // console.log(allATags);
       // [<a> </a> , <a> </a> , <a> </a> , <a> </a> ];
       let allLinksPromise = [];
       //   [ Promise<pending> , Promise<pending> , Promise<pending> , Promise<pending> ];
@@ -73,10 +63,34 @@ browserOpenPromise
           let linkPromise = tab.evaluate( function(elem){  return elem.getAttribute("href");  }   ,  allATags[i] );
           allLinksPromise.push(linkPromise);
       }
-
       let pendingPromise = Promise.all(allLinksPromise);
       return pendingPromise;
   })
   .then(function(allLinks){
-      console.log(allLinks);
+    console.log(allLinks);
   })
+  .catch(function(error){
+    console.log(error);
+  })
+
+
+
+function waitAndClick(selector){
+  return new Promise(function(resolve , reject){
+    // resolve will call the scb
+    // reject will call the fcb
+    let waitPromise = tab.waitForSelector(selector , {visible:true});
+    waitPromise.then(function(){
+      let clickPromise = tab.click(selector);
+      return clickPromise;
+    })
+    .then(function(){
+      // wait bhi click bhi
+      resolve();
+    })
+    .catch(function(error){
+      // euther wait fail or click fail
+      reject(error);
+    })
+  });
+}
