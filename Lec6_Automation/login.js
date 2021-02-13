@@ -67,12 +67,24 @@ browserOpenPromise
       return pendingPromise;
   })
   .then(function(allLinks){
-    console.log(allLinks);
+    let oneQuesSolvedPromise = solveQuestion(allLinks[0]);
+    return oneQuesSolvedPromise;
+  })
+  .then(function(){
+    console.log("One ques solved !");
   })
   .catch(function(error){
     console.log(error);
   })
 
+function solveQuestion(qLink){
+  return new Promise(function(resolve , reject){
+    let gotoPromise = tab.goto("https://www.hackerrank.com"+qLink);
+    gotoPromise.then(function(){
+      console.log("naviagted to ques 1");
+    })
+  })
+}
 
 
 function waitAndClick(selector){
