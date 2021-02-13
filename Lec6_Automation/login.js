@@ -38,5 +38,45 @@ browserOpenPromise
       return loginPromise;
   })
   .then(function(){
-      console.log("logged in !!");
+      // wait for this selector until it is visible on dom
+      let waitPromise = tab.waitForSelector('#base-card-1-link' , {visible:true} );
+      return waitPromise;
+    //Promise<Pending>
+  })
+  .then(function(){
+      let ipKitClickedPromise = tab.click('#base-card-1-link');
+      return ipKitClickedPromise;
+  })
+  .then(function(){
+    let waitPromise = tab.waitForSelector('a[data-attr1="warmup"]' , {visible:true});
+    return waitPromise;
+  })
+  .then(function(){
+      let warmupClicked = tab.click('a[data-attr1="warmup"]');
+      return warmupClicked;
+  })
+  .then(function(){
+      let waitPromise = tab.waitForSelector('.js-track-click.challenge-list-item' , {visible:true} );
+      return waitPromise;
+  })
+  .then(function(){
+      let allATagsPromise = tab.$$('.js-track-click.challenge-list-item');
+      return allATagsPromise;
+      // Promise<pending>
+  })
+  .then(function(allATags){
+      console.log(allATags);
+      // [<a> </a> , <a> </a> , <a> </a> , <a> </a> ];
+      let allLinksPromise = [];
+      //   [ Promise<pending> , Promise<pending> , Promise<pending> , Promise<pending> ];
+      for(let i=0 ; i<allATags.length ; i++){
+          let linkPromise = tab.evaluate( function(elem){  return elem.getAttribute("href");  }   ,  allATags[i] );
+          allLinksPromise.push(linkPromise);
+      }
+
+      let pendingPromise = Promise.all(allLinksPromise);
+      return pendingPromise;
+  })
+  .then(function(allLinks){
+      console.log(allLinks);
   })
