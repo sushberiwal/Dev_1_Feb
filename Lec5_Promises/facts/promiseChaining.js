@@ -27,6 +27,9 @@ f1KaPromise.then(function(data){
 .then(function(data){
     console.log(data+"")
 })
+.catch(function(error){
+    console.log(error);
+})
 
 
 
