@@ -12,9 +12,11 @@ f1KaPromise.then(  function(data){
     let f2KaPromise = fs.promises.readFile("./f2.txt");
     return f2KaPromise;
 })
-.then(function(data){
+.then(function(data){     
     console.log(data+"");
 })
+
+
 
 
 
