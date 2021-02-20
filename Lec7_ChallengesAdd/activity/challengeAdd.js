@@ -44,13 +44,15 @@ const pw = "123456789";
     return elem.getAttribute("href");
   }, createChallengeBtn);
   createChallengeUrl = `https://www.hackerrank.com${createChallengeUrl}`;
-//   for (let i = 0; i < challenges.length; i++) {
+  for (let i = 0; i < challenges.length; i++) {
     let newTab = await browser.newPage();
-    await addChallenge(newTab , createChallengeUrl , challenges[0]);
-//   }
+    await addChallenge(newTab , createChallengeUrl , challenges[i]);
+  }
 })();
 
 async function addChallenge(newTab, createChallengeUrl , challenge) {
+    await newTab.goto(createChallengeUrl);
+    await newTab.waitForSelector('#name' , {visible:true});
     // {
     //     "Challenge Name": "Pep_Java_1GettingStarted_1IsPrime",
     //     "Description": "Question 1",
@@ -58,18 +60,24 @@ async function addChallenge(newTab, createChallengeUrl , challenge) {
     //     "Input Format": "Integer",
     //     "Constraints": "n <= 10 ^ 9",
     //     "Output Format": "String",
-    //     "Tags": "Basics",
-    //     "Testcases": [
-    //       {
-    //         "Input": "7",
-    //         "Output": "Prime"
-    //       },
-    //       {
-    //         "Input": "9",
-    //         "Output": "Not Prime"
-    //       }
-    //     ]
-    //   },
-  await newTab.goto(createChallengeUrl);
-  await newTab.close();
+    //     "Tags": "Basics"
+    //   }
+    let challengeName = challenge["Challenge Name"];
+    let description = challenge["Description"];
+    let problem = challenge["Problem Statement"];
+    let input = challenge["Input Format"];
+    let constraints = challenge["Constraints"]
+    let output = challenge["Output Format"];
+    let tags = challenge["Tags"];
+
+    await newTab.type('#name' , challengeName);
+    await newTab.type('#preview' , description);
+    await newTab.type('#problem_statement-container .CodeMirror textarea' , problem);
+    await newTab.type('#input_format-container .CodeMirror textarea' , input);
+    await newTab.type('#constraints-container .CodeMirror textarea' , constraints);
+    await newTab.type('#output_format-container .CodeMirror textarea' , output);
+    await newTab.type('#tags_tag' , tags);
+    await newTab.keyboard.press("Enter");
+    await newTab.click('.save-challenge.btn.btn-green');
+    await newTab.close();
 }
