@@ -35,16 +35,56 @@ const pw = "123456789";
     let bothLis = await tab.$$(".nav-tabs.nav.admin-tabbed-nav li");
     let manageChallengeLi = bothLis[1];
     manageChallengeLi.click();
-    await tab.waitForSelector(".btn.btn-green.backbone.pull-right", {
-      visible: true,
-    });
-    // reach challenge page !!
-    
-    
+    await addModerators(browser , tab); // add moderators to all the questions on all the pages
   }
   catch(error){
       console.log(error);
   }
 })();
 
+
+async function addModerators(browser , tab){
+    try{
+        await tab.waitForSelector('.backbone.block-center' , {visible:true});
+        let allQuesATags = await tab.$$('.backbone.block-center');
+        let allQuesLinks = [];
+        for(let i=0 ; i<allQuesATags.length ; i++){
+            let qLink = await tab.evaluate( function(elem){ return elem.getAttribute("href")}   , allQuesATags[i])
+            allQuesLinks.push(`https://www.hackerrank.com${qLink}`);
+        }
+        for(let i=0 ; i<allQuesLinks.length ; i++){
+            let newTab = await browser.newPage();
+            addModeratorToAQues(allQuesLinks[i] , newTab );
+        }
+
+
+    }
+    catch(error){
+        return error;
+    }
+
+}
+
+async function handleConfirmBtn(tab){
+    try{
+        await tab.waitForSelector('#confirm-modal' , {visible:true , timeout:5000});
+        await tab.click('#confirmBtn');
+    }
+    catch(error){
+        return;
+    }
+}
+
+
+async function addModeratorToAQues(qLink , newTab){
+    await newTab.goto(qLink);
+    await handleConfirmBtn(newTab);
+    await newTab.waitForSelector('li[data-tab="moderators"]' , {visible:true});
+    await newTab.click('li[data-tab="moderators"]');
+    await newTab.waitForSelector('#moderator' , {visible:true} );
+    await newTab.type('#moderator', "sushant");
+    await newTab.click('.btn.moderator-save');
+    await newTab.click('.save-challenge.btn.btn-green');
+    await newTab.close();
+}
 
