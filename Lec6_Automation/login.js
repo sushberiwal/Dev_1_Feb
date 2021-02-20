@@ -190,13 +190,13 @@ browserOpenPromise
       })
       .then(function(){
         //lock btn found and clicked
-        console.log("lock btn found and clicked");
-        resolve();
+        // console.log();
+        resolve("lock btn found and clicked");
       })
       .catch(function(error){
         //lock btn not found !!
-        console.log("lock btn not found !!");
-        resolve();
+        // console.log("lock btn not found !!");
+        resolve("lock btn not found !!");
       })
     })
   }
@@ -214,7 +214,8 @@ function solveQuestion(qLink) {
         let lockBtnPromise = handleLockBtn();
         return lockBtnPromise;
       })
-      .then(function(){
+      .then(function(data){
+        console.log(data);
         let codePromise = getCode();
         return codePromise;
       })
