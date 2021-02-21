@@ -52,12 +52,25 @@ async function addModerators(browser , tab){
             let qLink = await tab.evaluate( function(elem){ return elem.getAttribute("href")}   , allQuesATags[i])
             allQuesLinks.push(`https://www.hackerrank.com${qLink}`);
         }
+        // add moderators to one page
+        let moderatorsOfAPagePromise = [];
         for(let i=0 ; i<allQuesLinks.length ; i++){
             let newTab = await browser.newPage();
-            addModeratorToAQues(allQuesLinks[i] , newTab );
+            let modPromise = addModeratorToAQues(allQuesLinks[i] , newTab );
+            moderatorsOfAPagePromise.push(modPromise);
         }
 
-
+        await Promise.all(moderatorsOfAPagePromise);
+        let allLis = await tab.$$('.pagination li');
+        let nextBtn = allLis[allLis.length-2];
+        let isDisabled = await tab.evaluate( function(elem){ return elem.classList.contains('disabled')  }  , nextBtn );
+        if(isDisabled){
+            return;
+        }
+        else{
+            await nextBtn.click();
+            await addModerators(browser , tab);
+        }
     }
     catch(error){
         return error;
