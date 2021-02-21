@@ -23,6 +23,10 @@ const { id, pw } = require("./credentials");
     await tab.click('.sqdOP.yWX7d.y3zKF');
     await tab.waitForSelector('.aOOlW.HoLwm' , {visible:true});
     await tab.click('.aOOlW.HoLwm');
+    await tab.waitForSelector('.XTCLo.x3qfX' , {visible:true});
+    await tab.type('.XTCLo.x3qfX' , "pepper_pepcoding");
+    await tab.waitForSelector('.-qQT3' , {visible:true});
+    await tab.click('.-qQT3');
   }
   catch(error){
       console.log(error);
