@@ -59,7 +59,7 @@ async function addModerators(browser , tab){
             let modPromise = addModeratorToAQues(allQuesLinks[i] , newTab );
             moderatorsOfAPagePromise.push(modPromise);
         }
-
+        
         await Promise.all(moderatorsOfAPagePromise);
         let allLis = await tab.$$('.pagination li');
         let nextBtn = allLis[allLis.length-2];
