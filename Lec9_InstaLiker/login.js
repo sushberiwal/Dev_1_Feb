@@ -26,7 +26,15 @@ const { id, pw } = require("./credentials");
     await tab.waitForSelector('.XTCLo.x3qfX' , {visible:true});
     await tab.type('.XTCLo.x3qfX' , "pepper_pepcoding");
     await tab.waitForSelector('.-qQT3' , {visible:true});
-    await tab.click('.-qQT3');
+    await Promise.all( [ tab.waitForNavigation({waitUntil:"networkidle2"}), tab.click('.-qQT3') ] );
+    await tab.waitForSelector('.eLAPa' , {visible:true});
+    await tab.click('.eLAPa')
+    for(let i=0 ; i<109 ; i++){
+        await tab.waitForSelector('.fr66n .wpO6b' , {visible:true});
+        await tab.click('.fr66n .wpO6b');
+        await tab.click('._65Bje.coreSpriteRightPaginationArrow');
+    }
+    
   }
   catch(error){
       console.log(error);
