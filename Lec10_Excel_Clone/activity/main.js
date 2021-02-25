@@ -5,6 +5,7 @@
 // add "start":"electron ." in scripts(package.json)
 
 const { app, BrowserWindow } = require('electron')
+const ejse = require("ejs-electron");
 
 let appLaunchPromise = app.whenReady();
 
@@ -16,7 +17,7 @@ appLaunchPromise.then(function() {
         nodeIntegration: true // node enabled 
       }
     })
-    win.loadFile('client/index.html').then(function(){
+    win.loadFile('client/index.ejs').then(function(){
       win.maximize(); // win will maximize after loadFile
       win.webContents.openDevTools(); // win will open with dev tools
     })
