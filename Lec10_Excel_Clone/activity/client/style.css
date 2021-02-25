@@ -1,0 +1,25 @@
+*{
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+.menu{
+    height: 30px;
+    background: lightblue;
+}
+.menu-options{
+    height: 60px;
+    background: lightgray;
+}
+.formula-tab{
+    height: 30px;
+    background: lightpink;
+}
+.cells{
+    background: violet;
+    height: calc(100vh - 150px);
+}
+.sheets{
+    height: 30px;
+    background: slategray;;
+}

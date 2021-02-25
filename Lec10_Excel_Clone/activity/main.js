@@ -16,7 +16,10 @@ appLaunchPromise.then(function() {
         nodeIntegration: true // node enabled 
       }
     })
-    win.loadFile('index.html')
+    win.loadFile('client/index.html').then(function(){
+      win.maximize(); // win will maximize after loadFile
+      win.webContents.openDevTools(); // win will open with dev tools
+    })
   }
   );
 
