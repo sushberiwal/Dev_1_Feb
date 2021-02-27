@@ -1,5 +1,7 @@
-function solve(formula){
-    // "( 10 + 20 )"
+function solve(formula , selfCellObject){
+    // me -> B1
+
+    // "( A1 + A2 )"
     let formulaComp = formula.split(" ");
     // [ "(" , "A1" , "+" , "A2" , ")" ];
     for(let i=0 ; i<formulaComp.length ; i++){
@@ -13,7 +15,12 @@ function solve(formula){
             let {rowId , colId} = getRowIdColId(fComp);
             let cellObject = db[rowId][colId];
             let value = cellObject.value;
-            //10
+
+            if(selfCellObject){
+                // push yourself into parent's childrens
+                cellObject.childrens.push( selfCellObject.name );
+            }
+
             formula = formula.replace(fComp , value);
         }
     }
@@ -21,6 +28,23 @@ function solve(formula){
     // formula = ( 10 + 20 ); =>  Infix evaluation
     let value = eval(formula); 
     return value;
+}
+
+function updateChildrens(cellObject){
+    let childrens = cellObject.childrens;
+    for(let i=0 ; i<childrens.length ; i++){
+        let childName = childrens[i];
+        let {rowId , colId} = getRowIdColId(childName);
+        let childCellObject = db[rowId][colId];
+        //B1
+        let updatedValue = solve(childCellObject.formula);
+        // ui set
+        let childDiv = document.querySelector(`div[rid="${rowId}"][cid="${colId}"]`);
+        childDiv.textContent = updatedValue;
+        // db set
+        childCellObject.value = updatedValue;
+        updateChildrens(childCellObject);
+    }
 }
 
 function getCellObject(elem){

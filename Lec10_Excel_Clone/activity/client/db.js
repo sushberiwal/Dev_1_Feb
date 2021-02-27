@@ -6,10 +6,13 @@ for(let i=0 ; i<100 ; i++){
         let address = String.fromCharCode(65+j) + (i+1); 
         let cellObject = {
             name:address,
-            value:""
+            value:"",
+            formula:"",
+            childrens:[]
         }
         row.push(cellObject);
     }
     db.push(row);
+
 }
-// console.log(db);
+console.log(db);

@@ -1,49 +1,45 @@
 let allCells = document.querySelectorAll(".cell");
 let addressBox = document.querySelector("#address");
-
+let formulaBox = document.querySelector("#formula");
 // last selected cell
 let lsc; 
 
-
 for(let i=0 ; i<allCells.length ; i++){
-    allCells[i].addEventListener("click" , onClickHandler);
-    allCells[i].addEventListener("blur" , onBlurHandler);
+    allCells[i].addEventListener("click" , onCellClickHandler);
+    allCells[i].addEventListener("blur" , onCellBlurHandler);
 }
 
-function onClickHandler(event){        
-    let clickedCell = event.target;
-    let rowId = Number(clickedCell.getAttribute("rid"));
-    let colId = Number(clickedCell.getAttribute("cid"));
-    // console.log(rowId , colId);
-    // rowId = 1 , colId = 1 => B2
-    let address = String.fromCharCode(65+colId) + (rowId+1) ;
-    console.log(address);
+formulaBox.addEventListener("blur" , onFormulaBlurHandler);
+
+function onCellClickHandler(e){        
+    let clickedCell = e.target;
+    let cellObject = getCellObject(clickedCell);
     // input type element
-    addressBox.value = address;
+    addressBox.value = cellObject.name;
+    formulaBox.value = cellObject.formula;
 }
-function onBlurHandler(e){
+function onCellBlurHandler(e){
     let blurredCell = e.target;
     lsc = blurredCell;
-    let value = blurredCell.textContent;
+    let value = blurredCell.textContent; 
     let cellObject = getCellObject(lsc);
+    // db set
     cellObject.value = value;
-    console.log(db);
+
+    // update childrens
+    updateChildrens(cellObject);
 }
-
-
-// formula 
-let formulaBox = document.querySelector("#formula");
-
-formulaBox.addEventListener("blur" , function(){
+function onFormulaBlurHandler(){
     let formula = formulaBox.value;
     // falsy values => undefined , false , "" , 0 , null
     if(formula){
+        let cellObject = getCellObject(lsc);
         // ( A1 + A2 )
-        let value = solve(formula);
+        let value = solve(formula , cellObject);
         // set UI
         lsc.textContent = value;
         // set DB
-        let cellObject = getCellObject(lsc);
+        cellObject.formula = formula;
         cellObject.value = value+"";
     }
-})
+}
