@@ -13,7 +13,6 @@
 }
 .formula-tab{
     height: 30px;
-    background: lightpink;
 }
 .cells{
     position: absolute;
@@ -35,6 +34,7 @@
 .cell{
     min-height: 30px;
     min-width: 80px;
+    max-width: 80px;
     border: 1px solid;
 }
 .top-left-cell{
@@ -42,6 +42,7 @@
     width: 30px;
     background: lightgray;
     position: absolute;
+    border: 1px solid;
 }
 .top-row{
     display: flex;
