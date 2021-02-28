@@ -36,6 +36,9 @@ function onFormulaBlurHandler(){
     // falsy values => undefined , false , "" , 0 , null
     if(formula){
         let cellObject = getCellObject(lsc);
+        if(cellObject.formula){
+            deleteFormula(cellObject);
+        }
         // ( A1 + A2 )
         let value = solve(formula , cellObject);
         // set UI
