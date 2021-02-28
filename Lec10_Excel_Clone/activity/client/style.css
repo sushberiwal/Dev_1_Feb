@@ -26,7 +26,8 @@
 }
 .sheets{
     height: 30px;
-    background: slategray;;
+    display: flex;
+    align-items: center;
 }
 .row{
     display: flex;
@@ -73,3 +74,30 @@
     align-items: center;
 }
 
+.sheets-list{
+    display: flex;
+    height: 100%;
+}
+.sheet{
+    margin-left: 5px;
+    border: 2px solid lightgreen;
+    border-radius: 10px;
+    /* height: 100%; */
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.add-sheet{
+    margin-left: 10px;
+}
+.fas{
+    font-size: 22px;
+    color: lightgreen;
+}
+
+.active-sheet{
+    background: lightgreen;
+    color: white;
+}
