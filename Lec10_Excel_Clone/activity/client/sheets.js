@@ -12,17 +12,23 @@ function switchSheetHandler(e){
         let currentActiveSheet = document.querySelector(".active-sheet");
         currentActiveSheet.classList.remove("active-sheet");
         clickedSheet.classList.add("active-sheet");
+        // set DB
+        let sid = clickedSheet.getAttribute("sid");
+        db = sheetsDB[sid];
+        // set UI
+        setUI();
     }
 }
 
 function addSheetHandler() {
+  initDB(); // adds a new db to sheetsDB
   let sheet = document.createElement("div"); 
   sheet.classList.add("sheet");
   sheet.setAttribute("sid" , sheetId);
   sheetId++;
   sheet.textContent = `Sheet ${sheetId}`;
-  //<div class="sheet" sid="1">Sheet 2</div>
-  sheetsList.append(sheet); // DOM effect
+  sheetsList.append(sheet);
   sheet.addEventListener("click" , switchSheetHandler);
+  console.log(sheetsDB);
 }
 
