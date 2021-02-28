@@ -8,7 +8,8 @@ for(let i=0 ; i<100 ; i++){
             name:address,
             value:"",
             formula:"",
-            childrens:[]
+            childrens:[],
+            parents:[]
         }
         row.push(cellObject);
     }

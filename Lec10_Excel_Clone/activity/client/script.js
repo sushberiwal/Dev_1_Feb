@@ -23,9 +23,11 @@ function onCellBlurHandler(e){
     lsc = blurredCell;
     let value = blurredCell.textContent; 
     let cellObject = getCellObject(lsc);
+    if(cellObject.formula && cellObject.value != value){
+        deleteFormula(cellObject);
+    }
     // db set
     cellObject.value = value;
-
     // update childrens
     updateChildrens(cellObject);
 }
@@ -41,5 +43,7 @@ function onFormulaBlurHandler(){
         // set DB
         cellObject.formula = formula;
         cellObject.value = value+"";
+        // tell childrens to update
+        updateChildrens(cellObject);
     }
 }

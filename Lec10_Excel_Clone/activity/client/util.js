@@ -19,6 +19,7 @@ function solve(formula , selfCellObject){
             if(selfCellObject){
                 // push yourself into parent's childrens
                 cellObject.childrens.push( selfCellObject.name );
+                selfCellObject.parents.push(  cellObject.name  );
             }
 
             formula = formula.replace(fComp , value);
@@ -28,6 +29,20 @@ function solve(formula , selfCellObject){
     // formula = ( 10 + 20 ); =>  Infix evaluation
     let value = eval(formula); 
     return value;
+}
+
+function deleteFormula(cellObject){
+    cellObject.formula="";
+    for(let i=0 ; i<cellObject.parents.length ; i++){
+        let parentName = cellObject.parents[i];
+        let {rowId , colId} = getRowIdColId(parentName);
+        let parentCellObject = db[rowId][colId];
+        let filteredChildrens = parentCellObject.childrens.filter(  function(child){
+            return child != cellObject.name;
+        })
+        parentCellObject.childrens = filteredChildrens;
+    }
+    cellObject.parents = [];
 }
 
 function updateChildrens(cellObject){
