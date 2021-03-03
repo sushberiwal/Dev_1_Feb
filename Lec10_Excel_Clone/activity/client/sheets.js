@@ -17,6 +17,8 @@ function switchSheetHandler(e){
         db = sheetsDB[sid];
         // set UI
         setUI();
+        addressBox.value = "";
+        formulaBox.value = "";
     }
 }
 

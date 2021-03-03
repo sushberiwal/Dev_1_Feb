@@ -14,7 +14,8 @@ appLaunchPromise.then(function() {
       width: 800,
       height: 600,
       webPreferences: {
-        nodeIntegration: true // node enabled 
+        nodeIntegration: true, // node enabled ,
+        enableRemoteModule:true
       }
     })
     win.loadFile('client/index.ejs').then(function(){

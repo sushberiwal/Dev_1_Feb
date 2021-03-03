@@ -5,14 +5,62 @@
 }
 .menu{
     height: 30px;
-    background: lightblue;
+    /* background: lightblue; */
+    display: flex;
+    align-items: center;
+}
+.menu div{
+    margin-left: 5px;
+    width: 60px;
+    cursor: default;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid lightgreen;
+    height: 80%;
+    border-radius: 10px;
+}
+.file{
+
+}
+.home{
+
 }
 .menu-options{
     height: 60px;
-    background: lightgray;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid lightgreen;
+    border-bottom: 1px solid lightgreen;
 }
+.menu-options div{
+
+}
+.file-menu-options{
+    display: flex;
+    width: 30%;
+    justify-content: space-around;
+}
+.file-menu-options div{
+    cursor: default;
+}
+.new{
+
+}
+.open{
+
+}
+.save{
+    
+}
+.home-menu-options{
+
+}
+
 .formula-tab{
     height: 30px;
+    display: flex;
+    align-items: center;
 }
 .cells{
     position: absolute;
@@ -100,4 +148,13 @@
 .active-sheet{
     background: lightgreen;
     color: white;
+}
+.active-menu{
+    background: lightgreen;
+    color: white;
+    height: 80%;
+    border-radius: 10px;
+}
+.hide{
+    display: none;
 }
